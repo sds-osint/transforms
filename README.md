@@ -1,7 +1,3 @@
-# transforms
-add deepl keys
-
-# Copied from 
 # Install
 
 1. Install Python 3.7 or newer
@@ -33,6 +29,12 @@ source venv/bin/activate
 python3 project.py list
 ```
 
+6. Import the Maltego Config file `local.mtz` into Maltego. If you just want to use specific modules, it is 
+possible to just import the module mtz e.g. `holehe.local.mtz` 
+
+7. Edit `maltego-ltc/venv/lib/python3.11/site-packages/pygle/config.py` if you want to use wigle insert your API Key 
+there, if not just insert fake info (otherwise you will get an parse error)
+
 # Update
 ```zsh
 source venv/bin/activate
@@ -41,6 +43,17 @@ pip install -r requirements.txt
 python3 project.py list
 ```
 The just switch to Maltego and import to Module mtz or the ``local.mtz`` to import all transforms from all Modules.
+
+
+
+# Bring your own Transforms to maltego-ltc
+
+Pull the last version of maltego-ltc and create a new branch (`git checkout -b branch_name`)
+
+Before you start writing transforms create your own "Module" to do so use the python script `create_module.py`. It 
+will create a sub-dir with the necessary files in the "modules"-folder. 
+
+When done coding create a pull-request.
 
 
 # Update or create of MTZ files

@@ -1,0 +1,10 @@
+version: '3'
+services:
+  maltego-trx:
+    image: maltego-trx:gunicorn
+    container_name: maltego-trx
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8090:8080"

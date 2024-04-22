@@ -1,0 +1,6 @@
+Owner,Author,Disclaimer,Description,Version,Name,UIName,URL,entityName,oAuthSettingId,transformSettingIDs,seedIDs,outputEntities
+Stephen,Stephen,,Get WordPress Users Details from Properties,0.1,get-user-details,Get WordPress Users Details from Properties,https://localhost:8080/run/get-user-details,maltego.Person,,,wordpress,maltego.Phrase;maltego.Alias;maltego.URL
+Stephen,Stephen,,Get WordPress Users,0.1,get-wp-users,Get WordPress Users,https://localhost:8080/run/get-wp-users,maltego.Website,,,wordpress,maltego.Person
+Stephen,Stephen,,Finds which addresses are mentioned in the robots.txt,0.1,get-robots,Get Robots.txt,https://localhost:8080/run/get-robots,maltego.Website,,,get_robots,maltego.URL
+Stephen,Stephen,,Uses DeepL to translate the text and updates the entity with translation details.,0.1,translate,Translate Phrase,https://localhost:8080/run/translate,maltego.Unknown,,,translate,maltego.Unknown
+Stephen,Stephen,,,0.1,openpeoplesearch,openpeoplesearch,https://localhost:8080/run/openpeoplesearch,,,,openpeoplesearch,

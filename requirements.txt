@@ -1,0 +1,7 @@
+maltego-trx
+requests
+cachetools
+-r modules/translate/requirements.txt
+-r modules/wordpress/requirements.txt
+-r modules/get_robots/requirements.txt
+-r modules/openpeoplesearch/requirements.txt
