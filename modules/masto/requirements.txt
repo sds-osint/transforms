@@ -1,0 +1,5 @@
+requests
+bs4
+tqdm
+urllib3
+w3lib

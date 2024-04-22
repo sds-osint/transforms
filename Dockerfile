@@ -4,7 +4,7 @@ LABEL Name=local_transforms_all Version=0.0.1
 RUN apt-get update && apt-get upgrade --yes
 RUN apt-get autoremove && apt-get clean
 
-WORKDIR /home/osint/local_transforms
+WORKDIR /home/osint/transforms
 
 # Copy project files and assign them to www-data
 COPY . .
@@ -16,7 +16,7 @@ RUN pip install --no-cache-dir --upgrade gunicorn gevent
 
 
 RUN groupadd -r maltego && useradd -r -g maltego maltego
-RUN chown -R maltego:maltego /home/osint/local_transforms
+RUN chown -R maltego:maltego /home/osint/transforms
 
 USER maltego
 
