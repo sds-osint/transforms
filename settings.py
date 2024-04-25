@@ -61,3 +61,9 @@ state_input = TransformSetting(name='state_input',
                                     default_value='',
                                     optional=True,
                                     popup=True)
+
+leakcheck_api = TransformSetting(name='leakcheck_api',
+                                   display_name='Leakcheck API Key',
+                                   setting_type='string',
+                                   optional=False,
+                                   popup=True)
