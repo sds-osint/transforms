@@ -7,3 +7,4 @@ cachetools
 -r modules/openpeoplesearch/requirements.txt
 -r modules/masto/requirements.txt
 -r modules/leakcheck/requirements.txt
+-r modules/Maigret/requirements.txt
