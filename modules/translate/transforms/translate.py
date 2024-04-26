@@ -8,10 +8,10 @@ import csv
 import random
 
 @translate_registry.register_transform(
-    display_name="Translate Phrase", 
+    display_name="Translate", 
     input_entity="maltego.Unknown",
     description='Uses DeepL to translate the text and updates the entity with translation details.',
-    output_entities=["maltego.Unknown"]
+    output_entities=[""]
 )
 
 class translate(DiscoverableTransform):
@@ -34,15 +34,14 @@ class translate(DiscoverableTransform):
             translated_text = translator.translate_text(og_text, target_lang='EN-US')
             input_lang = translated_text.detected_source_lang
 
-            # Since updating the original is not directly supported, create a mirrored entity with added properties
             og_entity = response.addEntity(og_type, og_text)
             og_entity.addProperty(fieldName='translated_text', displayName='Translated Text', value=translated_text.text)
             og_entity.addProperty(fieldName='source_lang', displayName='Source Language', value=input_lang)
 
-            # Optionally, add UI messages for user feedback
             response.addUIMessage(f"Translated from {input_lang} to EN-US.")
+            response.addUIMessage(f'Original entity type is: {og_type}')
 
-            translated_entity = response.addEntity(request.Type, translated_text)
+            translated_entity = response.addEntity(og_type, translated_text)
             translated_entity.addProperty(fieldName='text', displayName='Text', value=translated_text.text)
             translated_entity.setLinkLabel(f'Translated: {input_lang} to EN')
         

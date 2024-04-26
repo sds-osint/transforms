@@ -1,8 +1,7 @@
 FROM python:3.10-slim
-LABEL Name=local_transforms_all Version=0.0.1
+LABEL Name=transforms Version=0.0.1
 
-RUN apt-get update && apt-get upgrade --yes
-RUN apt-get autoremove && apt-get clean
+RUN apt-get update && apt-get upgrade -y && apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /home/osint/transforms
 
