@@ -35,7 +35,7 @@ class translate(DiscoverableTransform):
             input_lang = translated_text.detected_source_lang
 
             # Since updating the original is not directly supported, create a mirrored entity with added properties
-            og_entity = response.addEntity(request.Type, og_text)
+            og_entity = response.addEntity(og_type, og_text)
             og_entity.addProperty(fieldName='translated_text', displayName='Translated Text', value=translated_text.text)
             og_entity.addProperty(fieldName='source_lang', displayName='Source Language', value=input_lang)
 
