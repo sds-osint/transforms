@@ -9,7 +9,7 @@ import random
 
 @translate_registry.register_transform(
     display_name="Translate", 
-    input_entity="maltego.Unknown",
+    input_entity="",
     description='Uses DeepL to translate the text and updates the entity with translation details.',
     output_entities=[""]
 )
@@ -20,7 +20,7 @@ class translate(DiscoverableTransform):
     def create_entities(cls, request: MaltegoMsg, response: MaltegoTransform):
         # api_key = request.getTransformSetting(deepl_auth_key.id)
         og_text = request.Value
-        og_type = str(request.Type)
+        og_type = str(request.getProperty("Type"))
 
         with open ('modules/translate/assets/deepl_keys.csv', 'r') as file:
             reader = csv.reader(file)
