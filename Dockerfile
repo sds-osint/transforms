@@ -1,7 +1,13 @@
 FROM python:3.10-slim
 LABEL Name=transforms Version=0.0.1
 
-RUN apt-get update && apt-get upgrade -y && apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    && apt-get upgrade -y \
+    && apt-get autoremove -y \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* \
+    && groupadd -r maltego \
+    && useradd -r -g maltego maltego
 
 WORKDIR /home/osint/transforms
 
@@ -13,9 +19,8 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
 RUN pip install --no-cache-dir --upgrade gunicorn gevent
 
-
-RUN groupadd -r maltego && useradd -r -g maltego maltego
-RUN chown -R maltego:maltego /home/osint/transforms
+RUN pip install --no-cache-dir --upgrade -r requirements.txt gunicorn gevent \
+    && chown -R maltego:maltego /home/osint/transforms
 
 USER maltego
 
