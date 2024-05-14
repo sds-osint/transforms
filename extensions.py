@@ -16,3 +16,5 @@ registry.include_registry("openpeoplesearch", openpeoplesearch_registry)
 registry.include_registry("masto", masto_registry)
 registry.include_registry("leakcheck", leakcheck_registry)
 registry.include_registry("Maigret", Maigret_registry)
+
+
