@@ -67,3 +67,10 @@ leakcheck_api = TransformSetting(name='leakcheck_api',
                                    setting_type='string',
                                    optional=False,
                                    popup=True)
+
+pagination_count = TransformSetting(name='pagination_count',
+                                    display_name="Number of Pages",
+                                    setting_type='integer',
+                                    default_value='10',
+                                    optional=True,
+                                    popup=True)
