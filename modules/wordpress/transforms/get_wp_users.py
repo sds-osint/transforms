@@ -35,7 +35,14 @@ class get_wp_users(DiscoverableTransform):
                 resp = cls.session.get(url)
                 resp.raise_for_status() 
 
+                # Debugging: print the status code and the URL being requested
+                print(f"Requesting URL: {url}")
+                print(f"Status Code: {resp.status_code}")
+
                 results = resp.json()
+
+                # Debugging: print the JSON response length
+                print(f"Response length: {len(results)}")
 
                 if not results:
                     break
@@ -63,7 +70,12 @@ class get_wp_users(DiscoverableTransform):
 
             except requests.exceptions.HTTPError as e:
                 response.addUIMessage(f"HTTP Error: {e}", messageType="PartialError")
+                print(f"HTTP Error: {e}")
             except requests.exceptions.RequestException as e:
                 response.addUIMessage(f"Request failed: {e}", messageType="FatalError")
-            
+                print(f"Request failed: {e}")
+            except ValueError as e:
+                response.addUIMessage(f"JSON decode error: {e}", messageType="FatalError")
+                print(f"JSON decode error: {e}")
+
             page_number = page_number + 1
