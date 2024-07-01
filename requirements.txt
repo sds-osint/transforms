@@ -4,7 +4,7 @@ cachetools
 -r modules/wordpress/requirements.txt
 -r modules/get_robots/requirements.txt
 -r modules/openpeoplesearch/requirements.txt
--r modules/masto/requirements.txt
 -r modules/leakcheck/requirements.txt
 -r modules/Maigret/requirements.txt
 -r modules/translate/requirements.txt
+-r modules/freecnam/requirements.txt
