@@ -8,3 +8,4 @@ cachetools
 -r modules/Maigret/requirements.txt
 -r modules/translate/requirements.txt
 -r modules/freecnam/requirements.txt
+-r modules/spotify/requirements.txt

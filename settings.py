@@ -74,3 +74,17 @@ pagination_count = TransformSetting(name='pagination_count',
                                     default_value='10',
                                     optional=True,
                                     popup=True)
+
+spotify_client_id = TransformSetting(name='spotify_client_id',
+                                    display_name="Spotify Client ID",
+                                    setting_type='string',
+                                    default_value='',
+                                    optional=False,
+                                    popup=True)
+
+spotify_client_secret = TransformSetting(name='spotify_client_secret',
+                                    display_name="Spotify Client Secret",
+                                    setting_type='string',
+                                    default_value='',
+                                    optional=False,
+                                    popup=True)
