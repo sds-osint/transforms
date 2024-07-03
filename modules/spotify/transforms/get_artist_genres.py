@@ -27,7 +27,7 @@ class get_artist_genres(DiscoverableTransform):
         else:
             response.addUIMessage("Error: 'Genres' property not found or is empty.")
 
-if __name__ == "__main__":
-    import sys
-    msg = MaltegoMsg(sys.stdin.read())
-    get_artist_genres.create_entities(msg, MaltegoTransform())
+# if __name__ == "__main__":
+#     import sys
+#     msg = MaltegoMsg(sys.stdin.read())
+#     get_artist_genres.create_entities(msg, MaltegoTransform())

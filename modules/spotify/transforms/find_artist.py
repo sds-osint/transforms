@@ -13,15 +13,14 @@ import json
     settings=[],
     output_entities=[],
 )
-
 class find_artist(DiscoverableTransform):
 
     @classmethod
     def create_entities(cls, request: MaltegoMsg, response: MaltegoTransform):
-        artist_name = request.Value
+        artist_name = request.getProperty("person.fullname")
         
         try:
-            artist_data = cls.request_artist_data(artist_name)
+            artist_data = cls.request_artist_data(request, artist_name)
             entity = response.addEntity("maltego.Person", artist_data['name'])
             entity.addProperty(fieldName="Artist ID", displayName="Artist ID", value=artist_data['id'])
             entity.addProperty(fieldName="Popularity", displayName="Popularity", value=artist_data['popularity'])
@@ -34,10 +33,9 @@ class find_artist(DiscoverableTransform):
             response.addUIMessage(f"Error: {str(e)}")
 
     @staticmethod
-    def request_access_token():
-        
-        client_id = MaltegoMsg.getTransformSetting(spotify_client_id.id)
-        client_secret = MaltegoMsg.getTransformSetting(spotify_client_secret.id)
+    def request_access_token(request: MaltegoMsg):
+        client_id = request.getTransformSetting(spotify_client_id.id)
+        client_secret = request.getTransformSetting(spotify_client_secret.id)
 
         data = {
             'grant_type': 'client_credentials',
@@ -82,8 +80,8 @@ class find_artist(DiscoverableTransform):
         return artist_id
 
     @classmethod
-    def request_artist_data(cls, artist_name):
-        access_token = cls.request_access_token()
+    def request_artist_data(cls, request: MaltegoMsg, artist_name):
+        access_token = cls.request_access_token(request)
         artist_id = cls.request_artist_id(access_token, artist_name)
 
         headers = {
@@ -101,4 +99,6 @@ class find_artist(DiscoverableTransform):
 if __name__ == "__main__":
     import sys
     msg = MaltegoMsg(sys.stdin.read())
-    find_artist.create_entities(msg, MaltegoTransform())
+    transform = MaltegoTransform()
+    find_artist.create_entities(msg, transform)
+    print(transform.returnOutput())

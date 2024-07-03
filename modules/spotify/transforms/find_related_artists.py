@@ -1,10 +1,8 @@
 from maltego_trx.transform import DiscoverableTransform
 from maltego_trx.maltego import MaltegoMsg, MaltegoTransform
-from maltego_trx import overlays
 from extensions import spotify_registry
 from settings import spotify_client_id, spotify_client_secret
 import requests
-import json
 
 @spotify_registry.register_transform(
     display_name="Find Related Artists",
@@ -13,9 +11,8 @@ import json
     settings=[],
     output_entities=[],
 )
-
-
 class find_related_artists(DiscoverableTransform):
+    @classmethod
     def create_entities(cls, request: MaltegoMsg, response: MaltegoTransform):
         artist_id = request.getProperty("Artist ID")
         
@@ -24,7 +21,7 @@ class find_related_artists(DiscoverableTransform):
             return
         
         try:
-            related_artists_data = cls.request_related_artist_data(artist_id)
+            related_artists_data = cls.request_related_artist_data(request, artist_id)
             
             for artist_data in related_artists_data['artists']:
                 entity = response.addEntity("maltego.Person", artist_data['name'])
@@ -39,10 +36,9 @@ class find_related_artists(DiscoverableTransform):
             response.addUIMessage(f"Error: {str(e)}")
         
     @staticmethod
-    def request_access_token():
-        
-        client_id = MaltegoMsg.getTransformSetting(spotify_client_id.id)
-        client_secret = MaltegoMsg.getTransformSetting(spotify_client_secret.id)
+    def request_access_token(request: MaltegoMsg):
+        client_id = request.getTransformSetting(spotify_client_id.id)
+        client_secret = request.getTransformSetting(spotify_client_secret.id)
 
         data = {
             'grant_type': 'client_credentials',
@@ -59,8 +55,8 @@ class find_related_artists(DiscoverableTransform):
         return access_token
 
     @classmethod
-    def request_related_artist_data(cls, artist_id):
-        access_token = cls.request_access_token()
+    def request_related_artist_data(cls, request: MaltegoMsg, artist_id: str):
+        access_token = cls.request_access_token(request)
 
         headers = {
             'Authorization': f'Bearer {access_token}',
@@ -72,9 +68,3 @@ class find_related_artists(DiscoverableTransform):
         json_data = response.json()
 
         return json_data
-
-
-if __name__ == "__main__":
-    import sys
-    msg = MaltegoMsg(sys.stdin.read())
-    find_related_artists.create_entities(msg, MaltegoTransform())

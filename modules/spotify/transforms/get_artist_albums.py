@@ -1,10 +1,8 @@
 from maltego_trx.transform import DiscoverableTransform
 from maltego_trx.maltego import MaltegoMsg, MaltegoTransform
-from maltego_trx import overlays
 from extensions import spotify_registry
 from settings import spotify_client_id, spotify_client_secret
 import requests
-import json
 
 @spotify_registry.register_transform(
     display_name="Get Artists Albums",
@@ -13,7 +11,6 @@ import json
     settings=[],
     output_entities=[],
 )
-
 class get_artist_albums(DiscoverableTransform):
 
     @classmethod
@@ -25,7 +22,7 @@ class get_artist_albums(DiscoverableTransform):
             return
         
         try:
-            album_data = cls.get_artist_albums(artist_id)
+            album_data = cls.get_artist_albums(request, artist_id)
             
             for album in album_data['items']:
                 entity = response.addEntity("maltego.Alias", album['name'])
@@ -40,10 +37,9 @@ class get_artist_albums(DiscoverableTransform):
             response.addUIMessage(f"Error: {str(e)}")
         
     @staticmethod
-    def request_access_token():
-        
-        client_id = MaltegoMsg.getTransformSetting(spotify_client_id.id)
-        client_secret = MaltegoMsg.getTransformSetting(spotify_client_secret.id)
+    def request_access_token(request: MaltegoMsg):
+        client_id = request.getTransformSetting(spotify_client_id.id)
+        client_secret = request.getTransformSetting(spotify_client_secret.id)
 
         data = {
             'grant_type': 'client_credentials',
@@ -60,8 +56,8 @@ class get_artist_albums(DiscoverableTransform):
         return access_token
 
     @classmethod
-    def get_artist_albums(cls, artist_id):
-        access_token = cls.request_access_token()
+    def get_artist_albums(cls, request: MaltegoMsg, artist_id: str):
+        access_token = cls.request_access_token(request)
 
         params = {
             'include_groups': 'album,single,appears_on,compilation',
@@ -80,9 +76,3 @@ class get_artist_albums(DiscoverableTransform):
         json_data = response.json()
 
         return json_data
-
-
-if __name__ == "__main__":
-    import sys
-    msg = MaltegoMsg(sys.stdin.read())
-    get_artist_albums.create_entities(msg, MaltegoTransform())
