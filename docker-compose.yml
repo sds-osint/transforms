@@ -1,4 +1,6 @@
-version: '3.8'
+networks:
+  custom_network:
+    external: true
 
 services:
   maltego-trx:
@@ -7,6 +9,8 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile
-    ports:
-      - "8090:8080"
+    expose:
+      - "8080"
     restart: unless-stopped
+    networks:
+      - custom_network
